@@ -1,0 +1,14 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: e-learning-platform-api
+    environment:
+      POSTGRES_DB: elearningdb
+      POSTGRES_USER: elearninguser
+      POSTGRES_PASSWORD: elearningpass
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+volumes:
+  postgres-data:

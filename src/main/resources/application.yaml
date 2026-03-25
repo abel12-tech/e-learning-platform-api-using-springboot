@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: SpringSecurityDemo
+
+  datasource:
+    url: jdbc:postgresql://localhost:5433/elearningdb
+    username: elearninguser
+    password: elearningpass
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
