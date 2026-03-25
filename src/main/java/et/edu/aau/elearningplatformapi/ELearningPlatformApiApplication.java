@@ -4,6 +4,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.HashSet;
 import java.util.List;
@@ -72,6 +73,22 @@ public class ELearningPlatformApiApplication {
 
 
             System.out.println("✅ Sample data initialized successfully!");
+        };
+    }
+    @Bean
+    CommandLineRunner initUsers(AppUserRepository userRepository, PasswordEncoder encoder){
+        return args -> {
+            if(userRepository.findByUsername("student").isEmpty()){
+                userRepository.save(AppUser.builder().username("student").password(encoder.encode("password")).role("STUDENT").build());
+            }
+            if (userRepository.findByUsername("admin").isEmpty()) {
+                userRepository.save(AppUser.builder()
+                        .username("admin")
+                        .password(encoder.encode("password"))
+                        .role("ADMIN")
+                        .build());
+            }
+
         };
     }
 }

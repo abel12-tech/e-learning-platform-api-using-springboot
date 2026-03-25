@@ -1,7 +1,7 @@
 GET http://localhost:8081/api/students
-Authorization: Basic user 099c8ef2-cca3-4dd7-bfc2-b8b285731610
+Authorization: Basic student password
 
 ###
 
 GET http://localhost:8081/api/courses
-Authorization: Basic user 6d066fa7-eb32-415d-a063-5da62f153527
+Authorization: Basic admin password
