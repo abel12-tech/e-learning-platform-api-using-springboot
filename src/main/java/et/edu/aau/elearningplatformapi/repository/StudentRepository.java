@@ -1,5 +1,6 @@
-package et.edu.aau.elearningplatformapi;
+package et.edu.aau.elearningplatformapi.repository;
 
+import et.edu.aau.elearningplatformapi.entity.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

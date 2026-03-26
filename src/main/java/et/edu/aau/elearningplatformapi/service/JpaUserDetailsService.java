@@ -1,5 +1,7 @@
-package et.edu.aau.elearningplatformapi;
+package et.edu.aau.elearningplatformapi.service;
 
+import et.edu.aau.elearningplatformapi.entity.AppUser;
+import et.edu.aau.elearningplatformapi.repository.AppUserRepository;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

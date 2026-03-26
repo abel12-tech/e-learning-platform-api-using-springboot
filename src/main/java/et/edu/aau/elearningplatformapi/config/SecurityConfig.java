@@ -1,4 +1,4 @@
-package et.edu.aau.elearningplatformapi;
+package et.edu.aau.elearningplatformapi.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

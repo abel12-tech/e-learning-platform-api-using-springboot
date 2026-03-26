@@ -1,5 +1,7 @@
-package et.edu.aau.elearningplatformapi;
+package et.edu.aau.elearningplatformapi.controller;
 
+import et.edu.aau.elearningplatformapi.dto.instructor.InstructorResponseDTO;
+import et.edu.aau.elearningplatformapi.service.InstructorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

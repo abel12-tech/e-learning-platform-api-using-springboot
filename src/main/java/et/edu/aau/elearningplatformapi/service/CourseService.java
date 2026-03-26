@@ -1,5 +1,11 @@
-package et.edu.aau.elearningplatformapi;
+package et.edu.aau.elearningplatformapi.service;
 
+import et.edu.aau.elearningplatformapi.dto.course.CourseRequestDTO;
+import et.edu.aau.elearningplatformapi.dto.course.CourseResponseDTO;
+import et.edu.aau.elearningplatformapi.entity.Course;
+import et.edu.aau.elearningplatformapi.entity.Instructor;
+import et.edu.aau.elearningplatformapi.repository.CourseRepository;
+import et.edu.aau.elearningplatformapi.repository.InstructorRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,10 +1,13 @@
-package et.edu.aau.elearningplatformapi;
+package et.edu.aau.elearningplatformapi.service;
 
+import et.edu.aau.elearningplatformapi.dto.instructor.InstructorRequestDTO;
+import et.edu.aau.elearningplatformapi.dto.instructor.InstructorResponseDTO;
+import et.edu.aau.elearningplatformapi.entity.Course;
+import et.edu.aau.elearningplatformapi.entity.Instructor;
+import et.edu.aau.elearningplatformapi.repository.InstructorRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class InstructorService {

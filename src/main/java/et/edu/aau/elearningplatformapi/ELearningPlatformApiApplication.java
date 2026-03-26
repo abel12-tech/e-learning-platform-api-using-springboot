@@ -1,5 +1,7 @@
 package et.edu.aau.elearningplatformapi;
 
+import et.edu.aau.elearningplatformapi.entity.*;
+import et.edu.aau.elearningplatformapi.repository.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

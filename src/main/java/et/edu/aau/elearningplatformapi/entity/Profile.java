@@ -1,4 +1,4 @@
-package et.edu.aau.elearningplatformapi;
+package et.edu.aau.elearningplatformapi.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

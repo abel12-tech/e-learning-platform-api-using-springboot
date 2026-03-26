@@ -42,8 +42,8 @@ Content-Type: application/json
 
 ### ENROLL STUDENT
 ### =========================
-POST http://localhost:8081/api/students/2/enroll/2
+POST http://localhost:8081/api/students/2/courses/1
 Authorization: Basic admin password
 ###
-POST http://localhost:8081/api/students/2/unenroll/1
+DELETE http://localhost:8081/api/students/2/courses/1
 Authorization: Basic admin password

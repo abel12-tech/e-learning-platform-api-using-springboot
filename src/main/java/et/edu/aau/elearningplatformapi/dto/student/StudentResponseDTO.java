@@ -1,4 +1,4 @@
-package et.edu.aau.elearningplatformapi;
+package et.edu.aau.elearningplatformapi.dto.student;
 
 import java.util.List;
 

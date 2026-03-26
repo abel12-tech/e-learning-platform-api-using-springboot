@@ -1,4 +1,4 @@
-package et.edu.aau.elearningplatformapi;
+package et.edu.aau.elearningplatformapi.dto.course;
 
 public record CourseResponseDTO(
         Long id,

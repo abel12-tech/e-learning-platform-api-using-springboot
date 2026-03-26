@@ -1,10 +1,16 @@
-package et.edu.aau.elearningplatformapi;
+package et.edu.aau.elearningplatformapi.service;
 
+import et.edu.aau.elearningplatformapi.dto.student.StudentRequestDTO;
+import et.edu.aau.elearningplatformapi.dto.student.StudentResponseDTO;
+import et.edu.aau.elearningplatformapi.entity.Course;
+import et.edu.aau.elearningplatformapi.entity.Profile;
+import et.edu.aau.elearningplatformapi.entity.Student;
+import et.edu.aau.elearningplatformapi.repository.CourseRepository;
+import et.edu.aau.elearningplatformapi.repository.ProfileRepository;
+import et.edu.aau.elearningplatformapi.repository.StudentRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
@@ -59,6 +65,11 @@ public class StudentService {
         Student student = studentRepository.findById(studentId).orElseThrow(()-> new RuntimeException("Student not found"));
         Course course = courseRepository.findById(courseId).orElseThrow(() ->new RuntimeException("Course not found"));
 
+        // preventing duplicate enrollment
+        if(student.getCourses().contains(course)){
+            throw new IllegalStateException("Student already enrolled");
+        }
+        // checking max capacity
         if(course.getStudents().size() >= course.getMaxEnrollment()){
             throw new IllegalStateException("Course is full");
         }
@@ -67,6 +78,7 @@ public class StudentService {
         course.getStudents().add(student);
 
         studentRepository.save(student);
+
     }
 
     // Unenroll
@@ -76,10 +88,16 @@ public class StudentService {
 
         Course course = courseRepository.findById(courseId).orElseThrow(() -> new RuntimeException("Course not found"));
 
+        // check if enrolled
+        if(!student.getCourses().contains(course)){
+            throw new IllegalStateException("Student is not enrolled in this course");
+        }
+
         student.getCourses().remove(course);
         course.getStudents().remove(student);
 
         studentRepository.save(student);
+
     }
 
     // Mapper

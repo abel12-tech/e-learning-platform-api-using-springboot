@@ -1,7 +1,5 @@
-package et.edu.aau.elearningplatformapi;
+package et.edu.aau.elearningplatformapi.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
