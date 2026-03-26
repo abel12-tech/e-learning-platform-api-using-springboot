@@ -24,14 +24,14 @@ public class ELearningPlatformApiApplication {
             CourseRepository courseRepository
     ) {
         return args -> {
-            // Create Instructor
+            // Instructor
             Instructor instructor = Instructor.builder()
                     .name("Dr. John Smith")
                     .email("john.smith@aau.edu.et")
                     .build();
             instructorRepository.save(instructor);
 
-            // Create Courses linked to instructor
+            // Courses linked to instructor
             Course javaCourse = Course.builder()
                     .title("Introduction to Java")
                     .maxEnrollment(50)
@@ -46,14 +46,14 @@ public class ELearningPlatformApiApplication {
 
             courseRepository.saveAll(List.of(javaCourse, springCourse));
 
-            // Create Profile
+            //  Profile
             Profile profile = Profile.builder()
                     .bio("Computer Science student passionate about backend development.")
                     .phone("0912345678")
                     .build();
             profileRepository.save(profile);
 
-            // Create Student with profile
+            // Student with profile
             Student student = Student.builder()
                     .name("Abeba Tesfaye")
                     .email("abeba@student.aau.edu.et")
@@ -61,7 +61,7 @@ public class ELearningPlatformApiApplication {
                     .courses(new HashSet<>())
                     .build();
 
-            // Enroll student in courses
+            // student in courses
             student.getCourses().add(javaCourse);
             student.getCourses().add(springCourse);
 

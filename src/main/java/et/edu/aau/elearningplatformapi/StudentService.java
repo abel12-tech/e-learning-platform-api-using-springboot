@@ -10,67 +10,87 @@ import java.util.stream.Collectors;
 public class StudentService {
     private final StudentRepository studentRepository;
     private final CourseRepository courseRepository;
+    private final ProfileRepository profileRepository;
 
-    public StudentService(StudentRepository studentRepository, CourseRepository courseRepository) {
+    public StudentService(StudentRepository studentRepository, CourseRepository courseRepository, ProfileRepository profileRepository ) {
         this.studentRepository = studentRepository;
         this.courseRepository = courseRepository;
+        this.profileRepository = profileRepository;
     }
 
-    public Student save(Student student) {
-        return studentRepository.save(student);
+    // Create
+    public StudentResponseDTO create (StudentRequestDTO dto){
+        Profile profile = Profile.builder()
+                .bio(dto.bio())
+                .phone(dto.phone())
+                .build();
+        profileRepository.save(profile);
+
+        Student student = Student.builder()
+                .name(dto.name())
+                .email(dto.email())
+                .profile(profile)
+                .build();
+        studentRepository.save(student);
+
+        return toResponseDTO(student);
     }
 
+    // Get All
 
-    @Transactional(readOnly = true)
-    public List<StudentDTO> findAllDTOs() {
-        return studentRepository.findAllWithCoursesAndProfile().stream()
-                .map(this::toDTO)
+    public List<StudentResponseDTO> findAll(){
+        return studentRepository.findAllWithCoursesAndProfile()
+                .stream()
+                .map(this::toResponseDTO)
                 .toList();
     }
 
+    // Get By id
 
-    public StudentDTO findDTOById(Long id) {
+    public StudentResponseDTO findById(Long id) {
         Student student = studentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Student not found"));
-        return toDTO(student);
+
+        return toResponseDTO(student);
     }
 
-    public void delete(Long id) {
-        studentRepository.deleteById(id);
-    }
+    // Enroll
+    public void enroll(Long studentId,Long courseId){
+        Student student = studentRepository.findById(studentId).orElseThrow(()-> new RuntimeException("Student not found"));
+        Course course = courseRepository.findById(courseId).orElseThrow(() ->new RuntimeException("Course not found"));
 
-    public void enroll(Long studentId, Long courseId) {
-        Student student = studentRepository.findById(studentId)
-                .orElseThrow(() -> new RuntimeException("Student not found"));
-        Course course = courseRepository.findById(courseId)
-                .orElseThrow(() -> new RuntimeException("Course not found"));
-
-        if (course.getStudents().size() >= course.getMaxEnrollment()) {
+        if(course.getStudents().size() >= course.getMaxEnrollment()){
             throw new IllegalStateException("Course is full");
         }
-
+        // Sync
         student.getCourses().add(course);
+        course.getStudents().add(student);
+
         studentRepository.save(student);
     }
 
-    public void unenroll(Long studentId, Long courseId) {
-        Student student = studentRepository.findById(studentId)
-                .orElseThrow(() -> new RuntimeException("Student not found"));
-        Course course = courseRepository.findById(courseId)
-                .orElseThrow(() -> new RuntimeException("Course not found"));
+    // Unenroll
+
+    public void unenroll(Long studentId, Long courseId){
+        Student student = studentRepository.findById(studentId).orElseThrow(() -> new RuntimeException("Student not found"));
+
+        Course course = courseRepository.findById(courseId).orElseThrow(() -> new RuntimeException("Course not found"));
 
         student.getCourses().remove(course);
+        course.getStudents().remove(student);
+
         studentRepository.save(student);
     }
 
-    private StudentDTO toDTO(Student student) {
-        List<String> courseTitles = student.getCourses() != null
-                ? List.copyOf(student.getCourses()).stream()
-                .map(Course::getTitle)
-                .collect(Collectors.toList())
-                : List.of();
+    // Mapper
 
-        return new StudentDTO(
+    private StudentResponseDTO toResponseDTO(Student student){
+        List<String> courseTitles = student.getCourses() != null ?
+                student.getCourses().stream()
+                        .map(Course::getTitle)
+                        .toList()
+                :List.of();
+        return new StudentResponseDTO(
                 student.getId(),
                 student.getName(),
                 student.getEmail(),
@@ -79,4 +99,6 @@ public class StudentService {
                 courseTitles
         );
     }
+
+
 }

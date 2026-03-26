@@ -33,5 +33,4 @@ public class Instructor {
     @OneToMany(mappedBy = "instructor", cascade = CascadeType.ALL)
     private List<Course> courses = new ArrayList<>();
 
-    // Getters and Setters
 }

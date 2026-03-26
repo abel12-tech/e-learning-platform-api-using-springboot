@@ -2,12 +2,12 @@ package et.edu.aau.elearningplatformapi;
 
 import java.util.List;
 
-public record StudentDTO(
+public record StudentResponseDTO(
         Long id,
         String name,
         String email,
-        String profileBio,
-        String profilePhone,
+        String bio,
+        String phone,
         List<String> courses
-) {}
-
+) {
+}

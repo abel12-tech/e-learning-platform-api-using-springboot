@@ -19,7 +19,7 @@ public class JpaUserDetailsService implements UserDetailsService {
 
         UserDetails details = User.withUsername(user.getUsername())
                 .password(user.getPassword())
-                .roles(user.getRole()) // plain "STUDENT" → ROLE_STUDENT
+                .roles(user.getRole())
                 .build();
 
         System.out.println(">>> Loaded user: " + details.getUsername());

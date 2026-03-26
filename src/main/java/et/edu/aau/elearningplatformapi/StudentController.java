@@ -14,12 +14,38 @@ public class StudentController {
         this.studentService = studentService;
     }
     @PostMapping
-    public ResponseEntity<Student> create(@Valid @RequestBody Student student){
-        return ResponseEntity.ok(studentService.save(student));
+    public ResponseEntity<StudentResponseDTO> create(@Valid @RequestBody StudentRequestDTO dto){
+        return ResponseEntity.ok(studentService.create(dto));
+    }
+
+    // Get by id
+
+    @GetMapping("/{id}")
+    public ResponseEntity<StudentResponseDTO> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(studentService.findById(id));
+    }
+
+
+    // enroll
+    @PostMapping("/{studentId}/enroll/{courseId}")
+    public ResponseEntity<Void> enroll(
+         @PathVariable Long studentId,
+         @PathVariable Long courseId
+    )
+    {
+      studentService.enroll(studentId,courseId);
+
+      return ResponseEntity.ok().build();
+    }
+    // unenroll
+    @PostMapping("/{studentId}/unenroll/{courseId}")
+    public ResponseEntity<Void> unenroll(@PathVariable Long studentId ,@PathVariable Long courseId){
+        studentService.unenroll(studentId,courseId);
+        return ResponseEntity.ok().build();
     }
     @GetMapping
-    public ResponseEntity<List<StudentDTO>> getAll() {
-        return ResponseEntity.ok(studentService.findAllDTOs());
+    public ResponseEntity<List<StudentResponseDTO>> getAll() {
+        return ResponseEntity.ok(studentService.findAll());
     }
 
 }

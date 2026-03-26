@@ -10,29 +10,36 @@ import java.util.stream.Collectors;
 public class InstructorService {
     private final InstructorRepository instructorRepository;
 
-    public InstructorService(InstructorRepository instructorRepository) {
-        this.instructorRepository = instructorRepository;
+    public InstructorService(InstructorRepository instructorRepository){
+        this.instructorRepository=instructorRepository;
+    }
+    // Create
+    public InstructorResponseDTO create(InstructorRequestDTO dto){
+        Instructor instructor = Instructor.builder()
+                .name(dto.name())
+                .email(dto.email())
+                .build();
+        instructorRepository.save(instructor);
+
+        return toResponseDTO(instructor);
     }
 
-    public Instructor save(Instructor instructor) {
-        return instructorRepository.save(instructor);
-    }
+    // Get All
 
-    @Transactional(readOnly = true)
-    public List<InstructorDTO> findAllDTOs() {
-        return instructorRepository.findAllWithCourses().stream()
-                .map(this::toDTO)
+    public List<InstructorResponseDTO> findAll(){
+        return instructorRepository.findAll().stream()
+                .map(this::toResponseDTO)
                 .toList();
     }
 
-    private InstructorDTO toDTO(Instructor instructor) {
-        List<String> courseTitles = instructor.getCourses() != null
-                ? instructor.getCourses().stream()
-                .map(Course::getTitle)
-                .collect(Collectors.toList())
-                : List.of();
+    // Mapper
 
-        return new InstructorDTO(
+    private InstructorResponseDTO toResponseDTO(Instructor instructor){
+        List<String> courseTitles = instructor.getCourses() != null ? instructor.getCourses().stream()
+                .map(Course::getTitle)
+                .toList() : List.of();
+
+        return new InstructorResponseDTO(
                 instructor.getId(),
                 instructor.getName(),
                 instructor.getEmail(),

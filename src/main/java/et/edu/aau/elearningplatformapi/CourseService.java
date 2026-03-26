@@ -6,38 +6,61 @@ import java.util.List;
 
 @Service
 public class CourseService {
-    private final CourseRepository courseRepository;
 
-    public CourseService(CourseRepository courseRepository) {
+    private final CourseRepository courseRepository;
+    private final InstructorRepository instructorRepository;
+
+    public CourseService(CourseRepository courseRepository,
+                         InstructorRepository instructorRepository) {
         this.courseRepository = courseRepository;
+        this.instructorRepository = instructorRepository;
     }
 
-    // Return DTOs instead of raw entities
-    public List<CourseDTO> findAllDTOs() {
+    // Get all
+    public List<CourseResponseDTO> findAll() {
         return courseRepository.findAll().stream()
-                .map(this::toDTO)
+                .map(this::toResponseDTO)
                 .toList();
     }
 
-    public CourseDTO findDTOById(Long id) {
+    // Get By id
+    public CourseResponseDTO findById(Long id) {
         Course course = courseRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Course not found"));
-        return toDTO(course);
+        return toResponseDTO(course);
     }
 
-    public Course save(Course course) {
-        return courseRepository.save(course);
+    // create
+    public CourseResponseDTO create(CourseRequestDTO dto) {
+
+        Instructor instructor = instructorRepository.findById(dto.instructorId())
+                .orElseThrow(() -> new RuntimeException("Instructor not found"));
+
+        Course course = Course.builder()
+                .title(dto.title())
+                .maxEnrollment(dto.maxEnrollment())
+                .instructor(instructor)
+                .build();
+
+        courseRepository.save(course);
+
+        return toResponseDTO(course);
     }
 
+    // delete
     public void delete(Long id) {
         courseRepository.deleteById(id);
     }
 
-    private CourseDTO toDTO(Course course) {
-        return new CourseDTO(
+    // mapper
+
+    private CourseResponseDTO toResponseDTO(Course course) {
+        return new CourseResponseDTO(
                 course.getId(),
                 course.getTitle(),
-                course.getInstructor() != null ? course.getInstructor().getName() : null,
+                course.getInstructor() != null
+                        ? course.getInstructor().getName()
+                        : null,
                 course.getMaxEnrollment()
         );
     }

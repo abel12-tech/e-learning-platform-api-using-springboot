@@ -1,9 +1,7 @@
 package et.edu.aau.elearningplatformapi;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -13,10 +11,29 @@ public class CourseController {
     private final CourseService courseService;
 
     public CourseController(CourseService courseService){
+
         this.courseService = courseService;
     }
-    @GetMapping
-    public ResponseEntity<List<CourseDTO>> getAll(){
-       return ResponseEntity.ok(courseService.findAllDTOs());
+
+    @PostMapping
+    public CourseResponseDTO create(@RequestBody CourseRequestDTO dto) {
+        return courseService.create(dto);
     }
+
+    @GetMapping
+    public List<CourseResponseDTO> getAll() {
+        return courseService.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public CourseResponseDTO getById(@PathVariable Long id){
+        return courseService.findById(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id){
+        courseService.delete(id);
+    }
+
+
 }

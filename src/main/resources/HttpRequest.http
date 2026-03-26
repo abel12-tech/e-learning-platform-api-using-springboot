@@ -3,5 +3,47 @@ Authorization: Basic student password
 
 ###
 
+GET http://localhost:8081/api/students/2
+Authorization: Basic student password
+
+###
+
 GET http://localhost:8081/api/courses
+Authorization: Basic student password
+
+###
+
+GET http://localhost:8081/api/instructors
+Authorization: Basic admin password
+
+###
+POST http://localhost:8081/api/courses
+Authorization: Basic admin password
+Content-Type: application/json
+
+{
+  "title": "React Js Basics",
+  "maxEnrollment": 50,
+  "instructorId": 1
+}
+
+###
+
+POST http://localhost:8081/api/students
+Authorization: Basic admin password
+Content-Type: application/json
+
+{
+  "name": "Bona Bekele",
+  "email": "bona@student.aau.edu.et",
+  "bio": "Backend developer",
+  "phone": "0912345678"
+}
+
+### ENROLL STUDENT
+### =========================
+POST http://localhost:8081/api/students/2/enroll/2
+Authorization: Basic admin password
+###
+POST http://localhost:8081/api/students/2/unenroll/1
 Authorization: Basic admin password
