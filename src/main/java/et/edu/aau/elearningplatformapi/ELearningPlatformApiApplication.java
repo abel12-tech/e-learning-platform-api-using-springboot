@@ -5,6 +5,7 @@ import et.edu.aau.elearningplatformapi.repository.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -12,6 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 
 @SpringBootApplication
+@EnableFeignClients
 public class ELearningPlatformApiApplication {
 
     public static void main(String[] args) {

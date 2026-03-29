@@ -44,6 +44,35 @@ Content-Type: application/json
 ### =========================
 POST http://localhost:8081/api/students/2/courses/1
 Authorization: Basic admin password
-###
+### UNENROLL Student
 DELETE http://localhost:8081/api/students/2/courses/1
 Authorization: Basic admin password
+
+###
+
+GET http://localhost:8081/api/students/1/profile
+Authorization: Basic admin password
+
+###
+GET http://localhost:8081/posts/1
+Authorization: Basic admin password
+
+### ENROLL
+POST http://localhost:8081/api/enrollments
+Authorization: Basic admin password
+Content-Type: application/json
+
+{
+  "studentId": 2,
+  "courseId": 1
+}
+
+###
+DELETE http://localhost:8081/api/enrollments
+Authorization: Basic admin password
+Content-Type: application/json
+
+{
+  "studentId": 1,
+  "courseId": 2
+}
