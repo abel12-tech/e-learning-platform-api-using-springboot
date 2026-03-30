@@ -16,6 +16,7 @@ public class StudentController {
     public StudentController(StudentService studentService){
         this.studentService = studentService;
     }
+
     @PostMapping
     public ResponseEntity<StudentResponseDTO> create(@Valid @RequestBody StudentRequestDTO dto){
         return ResponseEntity.ok(studentService.create(dto));
@@ -28,23 +29,24 @@ public class StudentController {
         return ResponseEntity.ok(studentService.findById(id));
     }
 
-
-    // enroll
-    @PostMapping("/{studentId}/courses/{courseId}")
-    public ResponseEntity<Void> enroll(@PathVariable Long studentId,@PathVariable Long courseId){
-        studentService.enroll(studentId,courseId);
-        return ResponseEntity.status(201).build();
-    }
-    // unenroll
-    @DeleteMapping("/{studentId}/courses/{courseId}")
-    public ResponseEntity<Void> unenroll(@PathVariable Long studentId,@PathVariable Long courseId){
-        studentService.unenroll(studentId,courseId);
-        return ResponseEntity.noContent().build();
-    }
-
     @GetMapping
     public ResponseEntity<List<StudentResponseDTO>> getAll() {
         return ResponseEntity.ok(studentService.findAll());
     }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<StudentResponseDTO> patch(
+            @PathVariable Long id,
+            @RequestBody StudentRequestDTO dto
+    ) {
+        return ResponseEntity.ok(studentService.patch(id, dto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        studentService.delete(id);
+        return ResponseEntity.ok("Student deleted successfully!");
+    }
+
 
 }

@@ -5,6 +5,8 @@ import et.edu.aau.elearningplatformapi.dto.student.StudentResponseDTO;
 import et.edu.aau.elearningplatformapi.entity.Course;
 import et.edu.aau.elearningplatformapi.entity.Profile;
 import et.edu.aau.elearningplatformapi.entity.Student;
+import et.edu.aau.elearningplatformapi.exception.BadRequestException;
+import et.edu.aau.elearningplatformapi.exception.ResourceNotFoundException;
 import et.edu.aau.elearningplatformapi.repository.CourseRepository;
 import et.edu.aau.elearningplatformapi.repository.ProfileRepository;
 import et.edu.aau.elearningplatformapi.repository.StudentRepository;
@@ -55,23 +57,65 @@ public class StudentService {
 
     public StudentResponseDTO findById(Long id) {
         Student student = studentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Student not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found"));
 
         return toResponseDTO(student);
     }
 
+    // Update student partially
+    public StudentResponseDTO patch(Long id, StudentRequestDTO dto) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found"));
+
+        if (dto.name() != null) {
+            student.setName(dto.name());
+        }
+        if (dto.email() != null) {
+            student.setEmail(dto.email());
+        }
+        if (dto.bio() != null || dto.phone() != null) {
+            Profile profile = student.getProfile();
+            if (profile == null) {
+                profile = new Profile();
+            }
+            if (dto.bio() != null) {
+                profile.setBio(dto.bio());
+            }
+            if (dto.phone() != null) {
+                profile.setPhone(dto.phone());
+            }
+            profileRepository.save(profile);
+            student.setProfile(profile);
+        }
+
+        Student updated = studentRepository.save(student);
+        return toResponseDTO(updated);
+    }
+
+    // Delete student by ID
+    public void delete(Long id) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found"));
+
+        if (student.getCourses() != null) {
+            student.getCourses().forEach(course -> course.getStudents().remove(student));
+        }
+
+        studentRepository.delete(student);
+    }
+
     // Enroll
     public void enroll(Long studentId,Long courseId){
-        Student student = studentRepository.findById(studentId).orElseThrow(()-> new RuntimeException("Student not found"));
-        Course course = courseRepository.findById(courseId).orElseThrow(() ->new RuntimeException("Course not found"));
+        Student student = studentRepository.findById(studentId).orElseThrow(()-> new ResourceNotFoundException("Student not found"));
+        Course course = courseRepository.findById(courseId).orElseThrow(() ->new ResourceNotFoundException("Course not found"));
 
         // preventing duplicate enrollment
         if(student.getCourses().contains(course)){
-            throw new IllegalStateException("Student already enrolled");
+            throw new BadRequestException("Student already enrolled");
         }
         // checking max capacity
         if(course.getStudents().size() >= course.getMaxEnrollment()){
-            throw new IllegalStateException("Course is full");
+            throw new BadRequestException("Course is full");
         }
         // Sync
         student.getCourses().add(course);
@@ -84,13 +128,13 @@ public class StudentService {
     // Unenroll
 
     public void unenroll(Long studentId, Long courseId){
-        Student student = studentRepository.findById(studentId).orElseThrow(() -> new RuntimeException("Student not found"));
+        Student student = studentRepository.findById(studentId).orElseThrow(() -> new ResourceNotFoundException("Student not found"));
 
-        Course course = courseRepository.findById(courseId).orElseThrow(() -> new RuntimeException("Course not found"));
+        Course course = courseRepository.findById(courseId).orElseThrow(() -> new ResourceNotFoundException("Course not found"));
 
         // check if enrolled
         if(!student.getCourses().contains(course)){
-            throw new IllegalStateException("Student is not enrolled in this course");
+            throw new BadRequestException("Student is not enrolled in this course");
         }
 
         student.getCourses().remove(course);

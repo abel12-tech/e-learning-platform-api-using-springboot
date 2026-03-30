@@ -15,9 +15,20 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth ->auth
+                        // Student
+                        .requestMatchers("/api/courses", "/api/courses/*").hasAnyRole("STUDENT", "INSTRUCTOR", "ADMIN")
+                        .requestMatchers("/api/enrollments").hasAnyRole("STUDENT","ADMIN")
+                        // Instructor
+                        .requestMatchers("/api/courses/instructor/**").hasAnyRole("INSTRUCTOR", "ADMIN")
+                        .requestMatchers("/api/courses", "/api/courses/*").hasAnyRole("INSTRUCTOR", "ADMIN")
+                        // Admin
                         .requestMatchers("/api/students/**").hasRole("ADMIN")
                         .requestMatchers("/api/instructors/**").hasRole("ADMIN")
-                        .anyRequest().authenticated()
+                        .requestMatchers("/api/courses/**").hasRole("ADMIN")
+
+                        // Public
+                        .requestMatchers("/api/external/**").permitAll()
+
                 )
                 .httpBasic(httpBasic -> {});
 

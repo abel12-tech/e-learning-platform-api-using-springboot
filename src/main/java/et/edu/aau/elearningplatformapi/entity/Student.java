@@ -25,7 +25,7 @@ public class Student {
     @Column(unique = true, nullable = false)
     private String email;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
     private Profile profile;
 

@@ -24,8 +24,8 @@ public class JpaUserDetailsService implements UserDetailsService {
                 .roles(user.getRole())
                 .build();
 
-        System.out.println(">>> Loaded user: " + details.getUsername());
-        System.out.println(">>> Authorities: " + details.getAuthorities());
+        System.out.println("user: " + details.getUsername());
+        System.out.println("authorities: " + details.getAuthorities());
 
         return details;
     }

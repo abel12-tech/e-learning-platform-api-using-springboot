@@ -22,9 +22,23 @@ public class CourseController {
         return courseService.create(dto);
     }
 
+    @PatchMapping("/{id}")
+    public CourseResponseDTO patch(
+            @PathVariable Long id,
+            @RequestBody CourseRequestDTO dto
+    ) {
+        return courseService.patch(id, dto);
+    }
+
     @GetMapping
     public List<CourseResponseDTO> getAll() {
         return courseService.findAll();
+    }
+
+    // Fetch courses by instructor
+    @GetMapping("/instructor/{instructorId}")
+    public List<CourseResponseDTO> getByInstructor(@PathVariable Long instructorId) {
+        return courseService.findByInstructor(instructorId);
     }
 
     @GetMapping("/{id}")

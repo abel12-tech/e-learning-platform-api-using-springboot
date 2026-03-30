@@ -4,6 +4,7 @@ import et.edu.aau.elearningplatformapi.dto.instructor.InstructorRequestDTO;
 import et.edu.aau.elearningplatformapi.dto.instructor.InstructorResponseDTO;
 import et.edu.aau.elearningplatformapi.entity.Course;
 import et.edu.aau.elearningplatformapi.entity.Instructor;
+import et.edu.aau.elearningplatformapi.exception.ResourceNotFoundException;
 import et.edu.aau.elearningplatformapi.repository.InstructorRepository;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,40 @@ public class InstructorService {
         instructorRepository.save(instructor);
 
         return toResponseDTO(instructor);
+    }
+
+    // Get by id
+    public InstructorResponseDTO findById(Long id) {
+
+        Instructor instructor = instructorRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Instructor with ID " + id + " not found")
+                );
+
+        return toResponseDTO(instructor);
+    }
+
+    // update
+
+    public InstructorResponseDTO patch(Long id, InstructorRequestDTO dto) {
+
+        Instructor instructor = instructorRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Instructor with ID " + id + " not found")
+                );
+
+
+        if (dto.name() != null) {
+            instructor.setName(dto.name());
+        }
+
+        if (dto.email() != null) {
+            instructor.setEmail(dto.email());
+        }
+
+        Instructor updated = instructorRepository.save(instructor);
+
+        return toResponseDTO(updated);
     }
 
     // Get All

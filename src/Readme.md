@@ -1,6 +1,6 @@
-# 📚 E-Learning Platform API
+# E-Learning Platform API
 
-## 🚀 Overview
+## Overview
 
 This project is a **Spring Boot REST API** for managing an E-Learning platform.
 
@@ -8,12 +8,12 @@ It allows:
 
 * Managing students, courses, instructors, and profiles
 * Enrolling and unenrolling students in courses
-* Integrating external course ratings (mock API)
+* Consuming external api
 * Securing endpoints using Basic Authentication
 
 ---
 
-## 🧱 Architecture
+## Architecture
 
 The project follows a layered architecture:
 
@@ -24,13 +24,13 @@ dto          → Request & Response DTOs
 entity       → JPA Entities
 repository   → Data access layer
 service      → Business logic
-restclient   → External API integration
+restclient   → External API consuming
 exception    → Global exception handling
 ```
 
 ---
 
-## 🗂️ Entities & Relationships
+##  Entities & Relationships
 
 ### Entities
 
@@ -47,31 +47,39 @@ exception    → Global exception handling
 
 ---
 
-## 📌 API Endpoints
+##  API Endpoints
 
-### 👨‍🎓 Students
+### Students
 
 ```
 GET    /api/students
 GET    /api/students/{id}
 POST   /api/students
+PATCH /api/students/{id}
+DELETE /api/student/{id}
 ```
 
 ---
 
-### 📚 Courses
+###  Courses
 
 ```
 GET    /api/courses
 POST   /api/courses
+PATCH /api/courses/{id}
+DELETE /api/courses/{id}
+
 ```
 
 ---
 
-### 👨‍🏫 Instructors
+### Instructors
 
 ```
 GET    /api/instructors
+POST /api/instructors
+PATCH /api/instructors/{id}
+DELETE /api/instructors/{id}
 ```
 
 ---
@@ -107,7 +115,7 @@ DELETE /api/enrollments
 
 ---
 
-### 👤 Profile
+###  Profile
 
 ```
 GET /api/students/{studentId}/profile
@@ -117,7 +125,7 @@ DELETE /api/students/{studentId}/profile
 
 ---
 
-## 🔐 Authentication
+## Authentication
 
 This API uses **Basic Authentication**.
 
@@ -132,64 +140,7 @@ This API uses **Basic Authentication**.
 Authorization: Basic admin password
 ```
 
----
-
-## 🌐 External API Integration
-
-A mock external API is used to simulate course ratings:
-
-```
-GET /external-api/ratings/{courseId}
-```
-
-This is consumed internally using `RestTemplate`.
-
----
-
-## ✅ Validation
-
-Validation is implemented using annotations:
-
-* `@NotBlank`
-* `@Email`
-* `@Size`
-* `@NotNull`
-
----
-
-## ⚠️ Exception Handling
-
-Global exception handling is implemented using:
-
-```
-@ControllerAdvice
-```
-
-Handles:
-
-* Validation errors
-* Resource not found
-* Business logic errors
-
----
-
-## 📖 API Documentation (Swagger)
-
-Swagger UI is available at:
-
-```
-http://localhost:8081/swagger-ui.html
-```
-
-Features:
-
-* Interactive API testing
-* Request/response documentation
-* Authentication support
-
----
-
-## 🧪 Sample Requests
+## Sample Requests
 
 ### Create Student
 
@@ -218,57 +169,11 @@ POST "/api/courses"
 }
 ```
 
----
-
-## 🛠️ Tech Stack
-
-* Java 17+
-* Spring Boot
-* Spring Data JPA
-* Spring Security
-* OpenAPI (Swagger)
-* Hibernate
-* RestTemplate
-
----
-
 ## 🏁 How to Run
 
 1. Clone the repository
 2. Configure database in `application.yml`
 3. Run the application:
 
-```
-./gradlew bootRun
-```
 
-4. Open Swagger:
 
-```
-http://localhost:8081/swagger-ui.html
-```
-
----
-
-## 💡 Design Decisions
-
-* Used **Many-to-Many** for enrollment to match assignment requirements
-* Used **DTO pattern** to avoid exposing entities
-* Used **JSON-based enrollment API** for flexibility
-* Added **mock external API** to simulate real-world integration
-
----
-
-## 🏆 Conclusion
-
-This project demonstrates:
-
-* RESTful API design
-* Layered architecture
-* Data relationships with JPA
-* Security and validation
-* External API consumption
-
----
-
-👨‍💻 Developed by Abel Kinfu

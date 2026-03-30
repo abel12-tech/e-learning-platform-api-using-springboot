@@ -1,10 +1,59 @@
 GET http://localhost:8081/api/students
-Authorization: Basic student password
+Authorization: Basic admin password
+
+###
+PATCH http://localhost:8081/api/students/1
+Authorization: Basic admin password
+Content-Type: application/json
+
+{
+  "name": "Abeba Bekela"
+}
+
+### Get a student's profile
+GET http://localhost:8081/api/students/1/profile
+Authorization: Basic admin password
+Accept: application/json
 
 ###
 
+### Create a profile for student
+POST http://localhost:8081/api/students/1/profile
+Authorization: Basic admin password
+Content-Type: application/json
+Accept: application/json
+
+{
+  "bio": "I am a computer science student",
+  "phone": "0912345678"
+}
+
+
+### Update a student's profile (PATCH)
+PATCH http://localhost:8081/api/students/1/profile
+Authorization: Basic admin password
+Content-Type: application/json
+Accept: application/json
+
+{
+  "bio": "Updated bio from HTTP client",
+  "phone": "0912345678"
+}
+
+###
+
+### Delete a student's profile
+DELETE http://localhost:8081/api/students/1/profile
+Authorization: Basic admin password
+Accept: application/json
+
+###
+DELETE http://localhost:8081/api/students/1
+Authorization: Basic admin password
+###
+
 GET http://localhost:8081/api/students/2
-Authorization: Basic student password
+Authorization: Basic admin password
 
 ###
 
@@ -40,14 +89,6 @@ Content-Type: application/json
   "phone": "0912345678"
 }
 
-### ENROLL STUDENT
-### =========================
-POST http://localhost:8081/api/students/2/courses/1
-Authorization: Basic admin password
-### UNENROLL Student
-DELETE http://localhost:8081/api/students/2/courses/1
-Authorization: Basic admin password
-
 ###
 
 GET http://localhost:8081/api/students/1/profile
@@ -63,7 +104,7 @@ Authorization: Basic admin password
 Content-Type: application/json
 
 {
-  "studentId": 2,
+  "studentId": 1,
   "courseId": 1
 }
 
@@ -76,3 +117,66 @@ Content-Type: application/json
   "studentId": 1,
   "courseId": 2
 }
+
+###
+PATCH http://localhost:8081/api/courses/1
+Content-Type: application/json
+Authorization: Basic admin password
+
+{
+"title": "Spring Boot"
+}
+
+###
+
+POST http://localhost:8081/api/instructors
+Authorization: Basic admin password
+Content-Type: application/json
+
+{
+  "name": "Dr. John Doe",
+  "email": "john@aau.edu.et"
+}
+
+###
+
+GET http://localhost:8081/api/courses/instructor/1
+Authorization: Basic admin password
+
+###
+PATCH http://localhost:8081/api/instructors/1
+Authorization: Basic admin password
+Content-Type: application/json
+
+{
+  "name": "Dr. John Doe",
+  "email": "johndoe@aau.edu.et"
+}
+
+###
+
+PATCH http://localhost:8081/api/students/2
+Authorization: Basic admin password
+Content-Type: application/json
+
+{
+  "name": "Bona Bekele"
+}
+
+###
+
+DELETE http://localhost:8081/api/students/1
+Authorization: Basic admin password
+
+// Externam Api consuming
+
+### Get all courses
+GET http://localhost:8081/api/external/coursera/all
+Authorization: Basic admin password
+Accept: application/json
+
+
+### Get course by ID
+GET http://localhost:8081/api/external/coursera/courses/69Bku0KoEeWZtA4u62x6lQ
+Authorization: Basic admin password
+Accept: application/json

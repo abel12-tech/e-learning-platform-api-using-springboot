@@ -80,10 +80,21 @@ public class ELearningPlatformApiApplication {
         };
     }
     @Bean
-    CommandLineRunner initUsers(AppUserRepository userRepository, PasswordEncoder encoder){
+    CommandLineRunner initUsers(AppUserRepository userRepository, PasswordEncoder encoder) {
         return args -> {
-            if(userRepository.findByUsername("student").isEmpty()){
-                userRepository.save(AppUser.builder().username("student").password(encoder.encode("password")).role("STUDENT").build());
+            if (userRepository.findByUsername("student").isEmpty()) {
+                userRepository.save(AppUser.builder()
+                        .username("student")
+                        .password(encoder.encode("password"))
+                        .role("STUDENT")
+                        .build());
+            }
+            if (userRepository.findByUsername("instructor").isEmpty()) {
+                userRepository.save(AppUser.builder()
+                        .username("instructor")
+                        .password(encoder.encode("password"))
+                        .role("INSTRUCTOR")
+                        .build());
             }
             if (userRepository.findByUsername("admin").isEmpty()) {
                 userRepository.save(AppUser.builder()
@@ -92,7 +103,6 @@ public class ELearningPlatformApiApplication {
                         .role("ADMIN")
                         .build());
             }
-
         };
     }
 }
