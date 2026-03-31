@@ -43,4 +43,10 @@ public class InstructorController {
     ) {
         return instructorService.patch(id, dto);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        instructorService.delete(id);
+        return ResponseEntity.ok("Instructor deleted successfully!");
+    }
 }

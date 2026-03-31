@@ -70,6 +70,22 @@ public class InstructorService {
                 .toList();
     }
 
+    public void delete(Long id) {
+
+        Instructor instructor = instructorRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Instructor with ID " + id + " not found")
+                );
+
+        if (instructor.getCourses() != null) {
+            for (Course course : instructor.getCourses()) {
+                course.setInstructor(null);
+            }
+            instructor.getCourses().clear();
+        }
+
+        instructorRepository.delete(instructor);
+    }
     // Mapper
 
     private InstructorResponseDTO toResponseDTO(Instructor instructor){

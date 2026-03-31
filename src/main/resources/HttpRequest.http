@@ -168,6 +168,10 @@ Content-Type: application/json
 DELETE http://localhost:8081/api/students/1
 Authorization: Basic admin password
 
+###
+DELETE http://localhost:8081/api/instructors/1
+Authorization: Basic admin password
+
 // Externam Api consuming
 
 ### Get all courses
