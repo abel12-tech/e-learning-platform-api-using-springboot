@@ -28,6 +28,13 @@ public class SecurityConfig {
 
                         // Public
                         .requestMatchers("/api/external/**").permitAll()
+                        // Swagger
+                        .requestMatchers(
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html"
+                        ).permitAll()
+
 
                 )
                 .httpBasic(httpBasic -> {});
