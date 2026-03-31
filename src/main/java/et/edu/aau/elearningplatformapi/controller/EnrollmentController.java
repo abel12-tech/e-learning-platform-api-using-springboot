@@ -2,11 +2,13 @@ package et.edu.aau.elearningplatformapi.controller;
 
 import et.edu.aau.elearningplatformapi.dto.enrollment.EnrollmentRequestDTO;
 import et.edu.aau.elearningplatformapi.service.StudentService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/enrollments")
+@Tag(name = "Student Enrollment Management", description = "APIs for managing students enrollment")
 public class EnrollmentController {
     private final StudentService studentService;
 

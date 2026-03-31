@@ -5,6 +5,7 @@ import et.edu.aau.elearningplatformapi.dto.instructor.InstructorResponseDTO;
 import et.edu.aau.elearningplatformapi.dto.student.StudentRequestDTO;
 import et.edu.aau.elearningplatformapi.dto.student.StudentResponseDTO;
 import et.edu.aau.elearningplatformapi.service.InstructorService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/instructors")
+@Tag(name = "Instructor Management", description = "APIs for managing instructors")
 public class InstructorController {
     private final InstructorService instructorService;
 

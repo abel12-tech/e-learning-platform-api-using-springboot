@@ -1,5 +1,6 @@
 package et.edu.aau.elearningplatformapi.restclient;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/external/coursera")
+@Tag(name = "External Api", description = "APIs for consuming coursera api")
 public class CourseraController {
 
     private final CourseraService service;

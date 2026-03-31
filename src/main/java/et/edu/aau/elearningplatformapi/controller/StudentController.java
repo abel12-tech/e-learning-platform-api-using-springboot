@@ -3,6 +3,7 @@ package et.edu.aau.elearningplatformapi.controller;
 import et.edu.aau.elearningplatformapi.dto.student.StudentRequestDTO;
 import et.edu.aau.elearningplatformapi.dto.student.StudentResponseDTO;
 import et.edu.aau.elearningplatformapi.service.StudentService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/students")
+@Tag(name = "Student Management", description = "APIs for managing students")
 public class StudentController {
     private final StudentService studentService;
     public StudentController(StudentService studentService){

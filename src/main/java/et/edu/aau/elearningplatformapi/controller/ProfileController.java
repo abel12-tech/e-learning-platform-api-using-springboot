@@ -3,11 +3,13 @@ package et.edu.aau.elearningplatformapi.controller;
 import et.edu.aau.elearningplatformapi.dto.profile.ProfileRequestDTO;
 import et.edu.aau.elearningplatformapi.dto.profile.ProfileResponseDTO;
 import et.edu.aau.elearningplatformapi.service.ProfileService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/students/{studentId}/profile")
+@Tag(name = "Profile Management", description = "APIs for managing profiles")
 public class ProfileController {
 
     private final ProfileService profileService;
